@@ -4,11 +4,11 @@ unit IO
     end Closeable
 
     unit IStream extend Closeable
-        read(Array[Byte]): Integer
+        read(bytes: Array[Byte]): Integer
     end IStream
 
     unit OStream extend Closeable
-        write(Array[Byte]): Integer
+        write(bytes: Array[Byte]): Integer
     end OStream
 
     unit IOStream extend IStream, OStream
@@ -33,9 +33,9 @@ unit Socket extend IOStream
 
     accept(): Socket
 
-    override read(Array[Byte]): Integer
+    override read(bytes: Array[Byte]): Integer
     
-    override write(Array[Byte]): Integer
+    override write(bytes: Array[Byte]): Integer
 
     override close()
 end Socket
