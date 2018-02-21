@@ -1,21 +1,26 @@
+// Temporary IO stub
 unit IO
     unit Closeable
         close()
-    end Closeable
+    end 
 
     unit IStream extend Closeable
         read(bytes: Array[Byte]): Integer
-    end IStream
+    end 
 
     unit OStream extend Closeable
         write(bytes: Array[Byte]): Integer
-    end OStream
+    end 
 
     unit IOStream extend IStream, OStream
+    end
 
-    unit FileDescriptor
-end IO
+    // file in that sockets can read and write data
+    unit FileDescriptor 
+    end
+end 
 
+// Socket class that wraps C socket functionality
 unit Socket extend IOStream
     fd: FileDescriptor
     init(domain: Domain, protocol: Protocol) is
@@ -25,17 +30,38 @@ unit Socket extend IOStream
         end
     end
 
-    bind(port: Integer)
+    // wrapper of C bind function
+    bind(port: Integer) is
+    // TODO: ...
+    end
 
-    connect(address: String)
+    // wrapper of C connect function
+    connect(address: String) is
+    // TODO: ...
+    end
 
-    listen(maxConnections: Integer)
+    // wrapper of C listen function
+    listen(maxConnections: Integer): Integer is
+    // TODO: ...
+    end
 
-    accept(): Socket
+    // wrapper of C accept function
+    accept(): Socket is
+    // TODO: ...
+    end
 
-    override read(bytes: Array[Byte]): Integer
+    // allows socket to read from input stream
+    override read(bytes: Array[Byte]): Integer is
+    // TODO: ...
+    end
     
-    override write(bytes: Array[Byte]): Integer
+    // allows socket to write to output stream
+    override write(bytes: Array[Byte]): Integer is
+    // TODO: ...
+    end
 
-    override close()
-end Socket
+    // allows socket to close itself
+    override close() is
+    // TODO: ...
+    end
+end 
