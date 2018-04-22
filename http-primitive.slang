@@ -2,15 +2,23 @@ unit Request
     url: string
     method: HTTPMethod
     header: Header
-    body: string
+    body: OStream
 end
 
 unit Response
     status: HTTPStatusCode
     header: Header
-    body: string
+    body: IStream
 end
 
 unit Header
 
+    // Get Header value for given key
+    get(key: String): String is
+    end
+
+    // Insert key-value pair in Header,
+    // replaces old value if given key already exists
+    put(key: String, value: String): String is
+    end
 end
