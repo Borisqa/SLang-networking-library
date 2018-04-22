@@ -11,20 +11,32 @@ Main interfaces which library offers are HTTP Server and HTTP Client. They allow
 HTTP Client is an entity which allows to send http request to various resources. It provides access to configuring http request by providing http method, url and body if needed.
 
 Example of a GET request
+
 ```
-c := Client()
-req := Request("www.example.com", HTTPMethod.GET)
+c = Client()
+req = Request("www.example.com", HTTPMethod.GET)
 
-res := req.send(req)
+res = req.send(req)
 
-body := res.body.read()
+body = res.body.read()
 ```
 
 ## HTTP Server
 
 HTTP Server is an entity which allows to listen to incoming http request on a certain port. Its implementation is intended to be multithreaded and allows programmer to provide custom handler to each url route.
 
-__TODO: insert code example __
+```
+
+HelloHandler(req: Request) : Response is
+    return http.createResponse("Hello World\n")
+end
+
+server = Server(8080)
+
+s.setHandler("/hello", helloHandler)
+
+server.start()
+```
 
 ## Request and Response
 
