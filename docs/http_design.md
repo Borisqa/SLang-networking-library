@@ -61,4 +61,8 @@ HTTP Client accepts request objects which it sends on the wire, HTTP Server allo
 
 Since HTTP is text protocol, we must use some sort of parser to transform to and from request and response objects. HTTP/2 is not supported, since it is much harder to parse.
 
-## Examples
+## Request Pipeline
+
+Below you can see the picture of how HTTP Request gets processed by the server:
+
+![HTTP Diagram](/docs/request_flow.png)
