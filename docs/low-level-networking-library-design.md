@@ -11,7 +11,7 @@ This document serves as a depiction of how network library's low-level is design
 6. [Connection-Listener Interface](#connlist)
 
 ## Low-Level Architecture Overview  <a name="overview"></a>
-![Low-level Design](/docs/low-level-design.png)
+![Low-level Design](/docs/LowLevelNetworking.png)
 
 Above you can see low level design of SLang networking library. It consists of several logiacal layers that we will describe more closely in sections below. Summarizing information about layers of this diagram, it consist of (bottom to top):
 * **Socket system calls (Berkeley/Winsock)** - essential part of operating systems nowadays - implementation of socket system calls. They are implemented mostly in C/Assembler and already are part of the OS.
