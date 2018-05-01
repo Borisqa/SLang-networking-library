@@ -1,20 +1,29 @@
-unit Server
+unit Http
+    unit Server
 
-unit Server
+        routine setHandler(path: String, handler: routine (Request): Response) is
+        end
 
-    port_: Integer
+        start() is
+        end
 
-    handlers: Map<String, http.Handler>
-
-    init(port: Integer) is
-        port_ = port
     end
 
-    setHandler(path: String, handler: Http.Handler) is
-        handlers.add(path, handler)
-    end
+    unit DefaultServer extend Server
+        port_: Integer
+        handlers: Map<String, http.Handler>
+        
 
-    start() is
-    end
+        routine init(port: Integer) is
+            port_ = port
+        end
 
+
+        routine setHandler(path: String, handler: routine (Request): Response) is
+            handlers.add(path, handler)
+        end
+
+        start() is
+        end
+    end
 end
