@@ -4,7 +4,7 @@ unit Http
         routine setHandler(path: String, handler: routine (Request): Response) is
         end
 
-        start() is
+        routine start() is
         end
 
     end
@@ -24,7 +24,7 @@ unit Http
             handlers.add(path, handler)
         end
 
-        start() is
+        routine start() is
             while true loop
                 conn = Network.listen("tcp", "localhost:80")
                 request = Http.Parser.parseRequest(conn.read())
