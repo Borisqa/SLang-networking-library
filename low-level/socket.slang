@@ -1,5 +1,9 @@
 abstract unit Socket is 
     fd: Integer
+
+    close(): Integer is
+        return SocketSystemCalls.closeSocket(this.fd)
+    end
 end
 
 unit TCPSocket extend Socket is

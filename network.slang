@@ -1,14 +1,16 @@
 unit ServerExample is
     conn: Socket
-    conn := Network.listen("tcp", "localhost:80")
+    conn := Network.listen("tcp", ":80")
     output: String
     output := conn.read()
+    conn.close()
 end
 
 unit ClientExample is
     conn: Socket
     conn := Network.connect("tcp", "localhost:80")
     conn.write("Hello, World!")
+    conn.close()
 end
 
 unit Network is
@@ -47,60 +49,58 @@ unit Network is
 end
 
 abstract unit Connection 
-end 
-
-abstract unit Listener 
-end
-
-unit TCPConnection extend Connection is
-
     fd: Integer 
 
     sockaddr: SockAddr
     sockaddrlen: SockAddrLen
+end 
+
+abstract unit Listener 
+    fd: Integer 
+
+    sockaddr: SockAddr
+    sockaddrlen: SockAddrLen
+end
+
+unit TCPConnection extend Connection is
 
     connection_status: Integer
 
     init() is
-        fd is SocketSystemCalls.socket("TCP")
+        super.fd is SocketSystemCalls.socket("TCP")
     end
 
     connect(hostname: String): TCPSocket is 
-        sockaddr := parseAddress(hostname)
-        sockaddrlen := SockAddrLen(sockaddr)
+        super.sockaddr := parseAddress(hostname)
+        super.sockaddrlen := SockAddrLen(super.sockaddr)
 
-        connection_status := connectSocket(fd, sockaddr, sockaddrlen.size())
+        connection_status := connectSocket(super.fd, super.sockaddr, super.sockaddrlen.size())
 
-        tcpsock := TCPSocket(fd)
+        tcpsock := TCPSocket(super.fd)
         return tcpsock
     end
 end
 
 unit TCPListener extend Listener is
 
-    listener_fd: Integer
     client_fd: Integer
-    tcpaddr: TCPAddr
-
-    sockaddr: SockAddr
-    sockaddrlen: SockAddrLen
 
     // Statuses
     bind_status: Integer
     listen_status: Integer
 
     init() is
-        fd is SocketSystemCalls.socket("TCP")
+        super.fd is SocketSystemCalls.socket("TCP")
     end
 
     listen(hostname: String): TCPSocket is
-        sockaddr := parseAddress(hostname)
-        sockaddrlen := SockAddrLen(sockaddr)
+        super.sockaddr := parseAddress(hostname)
+        super.sockaddrlen := SockAddrLen(super.sockaddr)
 
         // Listen to port for client connection 
-        bind_status := SocketSystemCalls.bindSocket(fd, sockaddr, sockaddr.size())
-        listen_status := SocketSystemCalls.listenSocket(fd, 10)
-        client_fd := acceptSocket(fd, sockaddr, sockaddrlen)
+        bind_status := SocketSystemCalls.bindSocket(super.fd, super.sockaddr, super.sockaddr.size())
+        listen_status := SocketSystemCalls.listenSocket(super.fd, 10)
+        client_fd := acceptSocket(super.fd, super.sockaddr, super.sockaddrlen)
 
         tcpsock := TCPSocket(client_fd)
 
@@ -110,45 +110,36 @@ unit TCPListener extend Listener is
 end
 
 unit UDPConnection extend Connection is
-    fd: Integer
     
-    sockaddr: SockAddr
-    sockaddrlen: SockAddrLen
-
     bind_status: Integer
     
     init() is
-        fd is SocketSystemCalls.socket("UDP")
+        super.fd is SocketSystemCalls.socket("UDP")
     end
 
     listen(hostname: String): UDPSocket is
-        sockaddr := parseAddress(hostname)
+        super.sockaddr := parseAddress(hostname)
 
-        udpsock := UDPSocket(fd, sockaddr)
+        udpsock := UDPSocket(super.fd, super.sockaddr)
         return udpsock
     end
 end
 
 unit UDPListener extend Listener is
-    
-    fd: Integer
-    
-    sockaddr: SockAddr
-    sockaddrlen: SockAddrLen
-
+        
     bind_status: Integer
     
     init() is
-        fd is SocketSystemCalls.socket("UDP")
+        super.fd is SocketSystemCalls.socket("UDP")
     end
 
     listen(hostname: String): UDPSocket is
-        sockaddr := parseAddress(hostname)
-        sockaddrlen := SockAddrLen(sockaddr)
+        super.sockaddr := parseAddress(hostname)
+        super.sockaddrlen := SockAddrLen(super.sockaddr)
 
-        bind_status := bindSocket(fd, sockaddr, sockaddrlen)
+        bind_status := bindSocket(super.fd, super.sockaddr, super.sockaddrlen)
 
-        udpsock := UDPSocket(fd)
+        udpsock := UDPSocket(super.fd)
         return udpsock
     end
 end
