@@ -7,7 +7,7 @@
 5. [HTTP Parsing](#parsing)
 6. [Request Pipeline](#pipeline)
 
-![HTTP Diagram](/docs/http-design.png)
+![HTTP Diagram](http-design.png)
 
 ## Library Purpose <a name="purpose"></a>
 
@@ -74,4 +74,4 @@ Since HTTP is text protocol, we must use some sort of parser to transform to and
 
 Below you can see the picture of how HTTP Request gets processed by the server:
 
-![HTTP Diagram](/docs/request_flow.png)
+![HTTP Diagram](request_flow.png)
